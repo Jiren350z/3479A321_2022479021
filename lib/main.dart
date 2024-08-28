@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Hola mundo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 21, 194, 38)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Hola Chichillos'),
     );
   }
 }
@@ -66,7 +66,55 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
+    
   }
+  void _decreaseCounter(){
+      setState(() {
+        
+        
+        _counter--;
+
+        if(_counter < 0)
+        {
+          _counter = 0;
+        }
+
+      });
+      
+  }
+
+  void _resetCounter()
+  {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  //añadir, restar, reiniciar
+  Widget _buildBottomNavigationBar() {
+  return BottomAppBar(
+    shape: const CircularNotchedRectangle(),
+    notchMargin: 8.0,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.remove),
+          onPressed: _decreaseCounter,
+        ),
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: _incrementCounter,
+        ),
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: _resetCounter,
+        ),
+      ],
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+
+   
+
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -106,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Cantidad de Clicks:',
             ),
             Text(
               '$_counter',
@@ -115,11 +166,37 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      //version antigua, con el codigo fuera de una funcion
+      /*
+       bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.remove),
+              onPressed: _decreaseCounter,
+            ),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: _incrementCounter,
+            ),
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: _resetCounter,
+            ),
+          ],
+        ),
+      ),
+      */
+      bottomNavigationBar: _buildBottomNavigationBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        onPressed: _resetCounter,
+        tooltip: 'Reseteando',
+        child: const Icon(Icons.delete),
+        
+        
+      ),
+       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
