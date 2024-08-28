@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 21, 194, 38)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Hola Chichillos'),
+      home: const MyHomePage(title: 'Laboratorio_1'),
     );
   }
 }
@@ -166,32 +166,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      //version antigua, con el codigo fuera de una funcion
-      /*
-       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.remove),
-              onPressed: _decreaseCounter,
-            ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: _incrementCounter,
-            ),
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: _resetCounter,
-            ),
-          ],
-        ),
-      ),
-      */
+      
       bottomNavigationBar: _buildBottomNavigationBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: _resetCounter,
-        tooltip: 'Reseteando',
+        tooltip: 'Reiniciar',
         child: const Icon(Icons.delete),
         
         
