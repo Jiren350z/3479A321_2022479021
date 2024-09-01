@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,10 +30,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
+        fontFamily: "Fonts",
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 21, 194, 38)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Laboratorio_1'),
+      home: const MyHomePage(title: 'Laboratorio_2'),
     );
   }
 }
@@ -90,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter = 0;
     });
   }
-
+  
   //añadir, restar, reiniciar
   Widget _buildBottomNavigationBar() {
   return BottomAppBar(
@@ -99,18 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.remove),
+        ElevatedButton(
           onPressed: _decreaseCounter,
-        ),
-        IconButton(
-          icon: const Icon(Icons.add),
+          child: const Icon(Icons.remove)),
+        ElevatedButton(
           onPressed: _incrementCounter,
-        ),
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          onPressed: _resetCounter,
-        ),
+          child: const Icon(Icons.add)),
+        
       ],
     ),
   );
@@ -118,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String skullIcon = 'assets/icons/skull.svg';
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -156,6 +155,12 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SvgPicture.asset(
+            skullIcon,
+            semanticsLabel: 'Acme Logo',
+            width: 40,
+            height: 40,
+            ),
             const Text(
               'Cantidad de Clicks:',
             ),
@@ -171,10 +176,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _resetCounter,
         tooltip: 'Reiniciar',
-        child: const Icon(Icons.delete),
+        child: const Icon(Icons.refresh),
         
         
       ),
+      
+
        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
