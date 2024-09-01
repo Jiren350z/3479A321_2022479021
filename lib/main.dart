@@ -9,9 +9,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+   static final logger = Logger(
+    printer: PrettyPrinter(),
+  );
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
+   
+    logger.i("Logger is working! MyApp is being built.");
+
     return MaterialApp(
       title: 'Hola mundo',
       theme: ThemeData(
@@ -60,6 +68,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  // Define logger
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -70,6 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
 
+    // Log the increment event
+    logger.d('Contador incremetado a $_counter');
     
   }
   void _decreaseCounter(){
@@ -85,6 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
       });
       
+    // Log the decrement event
+    logger.w('Contador disminuido a $_counter');
+
   }
 
   void _resetCounter()
@@ -92,6 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter = 0;
     });
+
+    // Log the decrement event
+    logger.w('Contador reseteado a $_counter');
+
   }
   
   //añadir, restar, reiniciar
@@ -116,6 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    logger.i("Logger is working! MyHomePage is being built.");
+
     String skullIcon = 'assets/icons/skull.svg';
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
