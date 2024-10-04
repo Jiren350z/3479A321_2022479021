@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:laboratorios_modulo/pages/details.dart';
 import 'package:logger/logger.dart';
+import 'package:laboratorios_modulo/pages/widget.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -20,25 +14,66 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+
+  String victoryIcon = 'assets/icons/victory.svg';
+  String defeatIcon = 'assets/icons/defeat.svg';
+  String resetIcon = 'assets/icons/reset.svg';
   int _counter = 0;
 
-  // Define logger
+  //definicion logger
   var logger = Logger(
     printer: PrettyPrinter(),
+    
   );
+
+
+   @override
+  void initState() {
+    super.initState();
+    // Aquí puedes registrar el estado creado
+    logger.i("Estado de MyHomePage - initState");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    logger.i("Estado de MyHomePage - didChangeDependencies");
+  }
+
+  
+  @override
+  void didUpdateWidget(covariant MyHomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    logger.i("Estado de MyHomePage - didUpdateWidget");
+  }
+
+
+  @override
+  void deactivate() {
+    logger.w("Estado de MyHomePage - deactivate");
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    logger.w("Estado de MyHomePage - dispose");
+    super.dispose();
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    logger.i("Estado de MyHomePage - reassemble (Hot Reload)");
+  }
 
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      
       _counter++;
     });
 
-    // Log the increment event
+    //loguea el evento de aumentar
     logger.d('Contador incremetado a $_counter');
     
   }
@@ -55,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       });
       
-    // Log the decrement event
+    //loguea el evento de disminuir
     logger.w('Contador disminuido a $_counter');
 
   }
@@ -66,103 +101,136 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter = 0;
     });
 
-    // Log the decrement event
+    //loguea el evento de resetear
     logger.w('Contador reseteado a $_counter');
 
   }
-  
-  //añadir, restar, reiniciar
-  Widget _buildBottomNavigationBar() {
-  return BottomAppBar(
-    shape: const CircularNotchedRectangle(),
-    notchMargin: 8.0,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+  // Obtener el icono correspondiente basado en el valor del contador
+  String _getResultIcon() {
+    if (_counter == 10) {
+      return victoryIcon; // Icono de "Victoria"
+    } else if (_counter == 5) {
+      return defeatIcon; // Icono de "Comenzar nuevamente"
+    } else if (_counter == 0){
+      return resetIcon; // Icono de "Derrota" o intento en progreso
+    } else {
+      return resetIcon;
+    }
+  }
+
+  // Mostrar el mensaje adecuado según el valor del contador
+  String _getResultMessage() {
+    if (_counter == 10) {
+      return 'Victoria, has alcanzado 10 puntos';
+    } else if (_counter == 5) {
+      return 'Derrota, has alcanzado 5 puntos';
+    } else if (_counter == 0) {
+      return 'Puntaje en 0';
+    } else {
+      return 'Contador en: $_counter' ;
+    }
+  }
+    Widget _buildCardContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        SvgPicture.asset(
+          _getResultIcon(), // Icono basado en el estado
+          semanticsLabel: 'icono de resultado',
+          width: 60,
+          height: 60,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Text(
+            _getResultMessage(), // Mensaje basado en el estado
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ), 
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/serious_cat.jpg', // imagen de fondo
+            fit: BoxFit.cover,
+          ),
+        ),  
+            
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: _decreaseCounter,
+              child: const Icon(Icons.remove),
+            ),
+            ElevatedButton(
+              onPressed: _incrementCounter,
+              child: const Icon(Icons.add),
+            ),
+            ElevatedButton(
+              onPressed: _resetCounter,
+              child: SvgPicture.asset(
+                resetIcon,
+                width: 24,
+                height: 24,
+              ),
+            ),
+            
+            const SizedBox(
+              height: 20.0,
+            ),
+            const SizedBox(height: 60.0), // Ajusta este valor para mover el botón más abajo
+            // Botón "Ir a Detalles"
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DetailPage()),
+                );
+              },
+              child: const Text('Detalles'),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            
+          ],
+        ),
         ElevatedButton(
-          onPressed: _decreaseCounter,
-          child: const Icon(Icons.remove)),
-        ElevatedButton(
-          onPressed: _incrementCounter,
-          child: const Icon(Icons.add)),
-        
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WidgetPage(title: '',)),
+                );
+              },
+              child: const Text('Widget'),
+            ),
       ],
-    ),
-  );
-}
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    logger.i("Logger funcionando! MyHomePage esta siendo creado.");
 
-    logger.i("Logger is working! MyHomePage is being built.");
-
-    String skullIcon = 'assets/icons/skull.svg';
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-
-   
-
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SvgPicture.asset(
-            skullIcon,
-            semanticsLabel: 'Acme Logo',
-            width: 40,
-            height: 40,
-            ),
-            const Text(
-              'Cantidad de Clicks:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: Card(
+          margin: const EdgeInsets.all(16.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: _buildCardContent(),
+          ),
         ),
       ),
-      
-      bottomNavigationBar: _buildBottomNavigationBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _resetCounter,
-        tooltip: 'Reiniciar',
-        child: const Icon(Icons.refresh),
-        
-        
-      ),
-      
-
-       // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: const SizedBox.shrink(), // Sin floatingActionButton
     );
   }
+
 }

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 21, 194, 38)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Laboratorio_2'),
+      home: const MyHomePage(title: 'Laboratorio_5'),
     );
   }
 }
