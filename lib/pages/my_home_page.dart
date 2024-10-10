@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:laboratorios_modulo/pages/details.dart';
+import 'package:laboratorios_modulo/pages/about.dart';
 import 'package:logger/logger.dart';
 import 'package:laboratorios_modulo/pages/widget.dart';
+import 'package:laboratorios_modulo/pages/audit.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -211,6 +213,78 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+   Drawer buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.green,
+            ),
+            child: Text(
+              'Menú Principal',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+          ListTile(
+            title: const Text('Contador'),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              // Agrega la funcionalidad que desees
+              _incrementCounter;
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Aumentando')),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Detalles'),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              // Agrega la funcionalidad que desees
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DetailPage()),
+                );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Ingresando a Detalles')),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Sobre'),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              // Agrega la funcionalidad que desees
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutPage()),
+              );              
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Ingresando a Sobre')),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Auditoria'),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              // Agrega la funcionalidad que desees
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AuditPage()),
+              );              
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Ingresando a Auditoria')),
+              );
+            },
+          ),          
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     logger.i("Logger funcionando! MyHomePage esta siendo creado.");
@@ -220,6 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
+      drawer: buildDrawer(), // Añadimos el Drawer aquí
       body: Center(
         child: Card(
           margin: const EdgeInsets.all(16.0),
