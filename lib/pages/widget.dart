@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:laboratorios_modulo/pages/appdata.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 
 class WidgetPage extends StatefulWidget {
@@ -14,8 +16,7 @@ class WidgetPage extends StatefulWidget {
 
 
 class _WidgetPageState extends State<WidgetPage> {
-  
-  
+
 
     //definicion logger
   var logger = Logger(
@@ -28,6 +29,7 @@ class _WidgetPageState extends State<WidgetPage> {
     super.initState();
     // Aquí puedes registrar el estado creado
     logger.i("Estado de MyHomePage - initState");
+    context.read<AppData>().registerAction('Acceso a la pantalla de Widgets');
   }
 
   @override
@@ -63,6 +65,9 @@ class _WidgetPageState extends State<WidgetPage> {
   
   @override
   Widget build(BuildContext context) {
+   // Registrar la acción al acceder a la pantalla de Widgets
+    
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('widget'),
