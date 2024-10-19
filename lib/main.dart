@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'pages/my_home_page.dart'; //nueva ruta del my home page
-import 'package:laboratorios_modulo/pages/appdata.dart';
+import 'package:laboratorios_modulo/models/appdata.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "Fonts",
           colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 21, 194, 38)),
         ),
-        home: const MyHomePage(title: 'Laboratorio_6'),
+        home: const MyHomePage(title: 'Laboratorio_7'),
       ),
     );    
   }

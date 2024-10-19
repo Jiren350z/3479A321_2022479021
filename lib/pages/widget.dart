@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laboratorios_modulo/pages/appdata.dart';
+import 'package:laboratorios_modulo/models/appdata.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
